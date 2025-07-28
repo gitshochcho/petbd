@@ -34,6 +34,8 @@ class User extends Authenticatable
         "password",
         "ccode",
         "email",
+        "password",
+        "full_name",
         "auth_code",
         "otp_for",
         "is_verify",
