@@ -57,10 +57,10 @@ class UserInfo extends Model
 
 
 
-    protected static function boot()
-    {
+    // protected static function boot()
+    // {
 
-        parent::boot();
+    //     parent::boot();
 
         // updating created_by and modified_by when model is created
         // static::creating(function ($model) {
@@ -78,7 +78,6 @@ class UserInfo extends Model
         //         $model->modified_by = Auth::user()->id;
         //     }
         // });
-    }
 
 
     public function scopeOrderByName($query)
