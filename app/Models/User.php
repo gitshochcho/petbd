@@ -32,6 +32,8 @@ class User extends Authenticatable
         "mobile",
         "ccode",
         "email",
+        "password",
+        "full_name",
         "auth_code",
         "otp_for",
         "is_verify",
