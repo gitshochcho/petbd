@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Models\DoctorProfile;
 
 class User extends Authenticatable
 {
@@ -30,6 +31,7 @@ class User extends Authenticatable
     protected $fillable = [
         "uid",
         "mobile",
+        "password",
         "ccode",
         "email",
         "auth_code",
@@ -113,4 +115,9 @@ class User extends Authenticatable
             // }
         });
     }
+    public function doctorProfile()
+    {
+        return $this->hasOne(DoctorProfile::class, 'user_id', 'id');
+    }
+
 }
