@@ -15,6 +15,8 @@ Route::controller(PetOwnerController::class)->prefix('pet-owner')->group(functio
     Route::post('/register', 'register')->name('cmsAuth.register');
 });
 
+Route::post('doctor/reg', [App\Http\Controllers\Api\Cms\AuthClientController::class, 'docReg']);
+
 
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value])->group(function () {
     Route::post('/refresh-token', [AuthClientController::class, 'refreshToken']);

@@ -44,7 +44,6 @@ class PetRepository implements PetRepositoryInterface
         DB::beginTransaction();
         try {
             $petData = $request->only([
-                'owner_id',
                 'name',
                 'category_id',
                 'subcategory_id',
@@ -59,7 +58,7 @@ class PetRepository implements PetRepositoryInterface
                 'photo',
                 'status'
             ]);
-
+            $petData['owner_id'] = Auth::id();
             $pet = Pet::create($petData);
 
             DB::commit();

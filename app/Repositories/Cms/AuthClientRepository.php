@@ -42,9 +42,9 @@ class AuthClientRepository implements AuthClientRepositoryInterface
         try {
             $loginData = [];
             $loginData = ['email' => $request['email'], 'password' => $request['password']];
-            if (Auth::guard($this->auth_guard_name)->attempt($loginData)) {
+            if (Auth::attempt($loginData)) {
 
-                $user = $obj::where('id', Auth::guard($this->auth_guard_name)->id())->first();
+                $user = Auth::user();
 
                 $accessToken = $user->createToken('access_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.ac_expiration')));
                 $refreshToken = $user->createToken('refresh_token', [TokenAbility::ISSUE_ACCESS_TOKEN->value], Carbon::now()->addMinutes(config('sanctum.rt_expiration')));

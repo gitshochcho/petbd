@@ -8,5 +8,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-    Route::post('doctor/reg', [App\Http\Controllers\Api\Cms\AuthClientController::class, 'docReg']);
+
 
