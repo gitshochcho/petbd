@@ -32,7 +32,7 @@ class CheckPermission
         // Get the authenticated user
         $user = Auth::user();
 
-        return $next($request);
+       
 
         if (!$user) {
             return $this->error(null, AuthConstants::UNAUTHORIZED, 401, false);
@@ -40,8 +40,12 @@ class CheckPermission
         // Fetch the user's role ID
         $roleId = $user->user_type; // Assuming `role_id` exists in the `users` table
 
+        
+
         // Get the current route name
         $routeName = $request->route()->getName();
+
+       
 
         $routeData = explode('.', $routeName);
         $routes = '';
@@ -49,19 +53,21 @@ class CheckPermission
             $routes = $routeData[0];
         }
         $task = end($routeData);
-
+        
         // Find the tree entity associated with the route
         $treeEntity = TreeEntity::where('route_location', $routes)->first();
-
-
+        
+        
         if (!$treeEntity) {
             return $this->error(null, 'Route not found in permissions', 404, false);
         }
+
+       
         // Check the user's permissions for the given tree entity and action
-        $permission = RolePermission::where('role_id', $roleId)
+        $permission = RolePermission::where('role_id', $user->user_type)
             ->where('view', $treeEntity->id)
             ->first();
-
+        
         if (!$permission) {
             return $this->error(null, 'Forbidden: No view permission', 403, false);
         }

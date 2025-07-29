@@ -26,17 +26,17 @@ class AppointmentRepository implements AppointmentRepositoryInterface
                 $appointments = $query->get();
             }
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Appointments retrieved successfully',
-                'data' => $appointments
-            ]);
+            // return response()->json([
+            //     'status' => true,
+            //     'message' => 'Appointments retrieved successfully',
+            //     'data' => $appointments
+            // ]);
+            $responseData = $appointments;
+            $responseData['permissions'] = $this->getUserPermissions();
+            return $this->success($responseData, Constants::GETALL, Response::HTTP_OK, true);
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Error retrieving appointments: ' . $e->getMessage(),
-                'data' => null
-            ], 500);
+            $responseData = ['permissions' => $this->getUserPermissions()];
+                return $this->error($responseData, Constants::NODATA, Response::HTTP_NOT_FOUND, false);
         }
     }
 

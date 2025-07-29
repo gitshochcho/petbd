@@ -51,8 +51,9 @@ class AuthRepository implements AuthRepositoryInterface
     public function login($obj, $request)
     {
         $loginData = [];
+       
         if (filter_var($request['login_id'], FILTER_VALIDATE_EMAIL)) {
-            $loginData = ['email' => $request['login_id'], 'password' => $request['password'], 'user_type' => 1];
+            $loginData = ['email' => $request['login_id'], 'password' => $request['password']];
         } elseif (preg_match($this->mobile_pattern, $request['login_id'])) {
             if ($request['ccode']) {
                 $loginData = ['mobile' => str_replace($request['ccode'], '', (int)$request['login_id']), 'ccode' => $request['ccode'], 'password' => $request['password']];
@@ -62,37 +63,41 @@ class AuthRepository implements AuthRepositoryInterface
         } else {
             return $this->error(null, 'Invalid email or mobile number', Response::HTTP_ACCEPTED, false);
         }
+       
         try {
             if (Auth::guard($this->auth_guard_name)->attempt($loginData)) {
                 $getUser = $obj::where('id', Auth::guard($this->auth_guard_name)->id())->with(['UserInfo'])->first();
+               
             }
+            
             if (isset($getUser)) {
-
-                if ($getUser->user_type == $request['user_type']) {
+                // return $getUser->user_type == $request['user_type'];
+                // if ($getUser->user_type == $request['user_type']) {
+                    
                     if ($getUser->photo) {
                         $getUser->photo = config('services.storage_base_url') . '/storage/' . $getUser->photo;
                     }
-
-                    if ($request['user_type'] == 1) {
+   
+                    // if ($request['user_type'] == 1) {
                         $accessToken =  $getUser->createToken('access_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.ac_expiration')));
                         $refreshToken =  $getUser->createToken('refresh_token', [TokenAbility::ISSUE_ACCESS_TOKEN->value], Carbon::now()->addMinutes(config('sanctum.rt_expiration')));
-                    } else {
-                        $accessToken =  $getUser->createToken('access_cust_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.ac_expiration')));
-                        $refreshToken =  $getUser->createToken('refresh_cust_token', [TokenAbility::ISSUE_ACCESS_TOKEN->value], Carbon::now()->addMinutes(config('sanctum.rt_expiration')));
-                    }
+                    // } else {
+                    //     $accessToken =  $getUser->createToken('access_cust_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.ac_expiration')));
+                    //     $refreshToken =  $getUser->createToken('refresh_cust_token', [TokenAbility::ISSUE_ACCESS_TOKEN->value], Carbon::now()->addMinutes(config('sanctum.rt_expiration')));
+                    // }
 
 
                     $getUser['token'] = $accessToken->plainTextToken;
                     $getUser['expire_time'] = config('sanctum.ac_expiration');
                     $getUser['refresh_token'] = $refreshToken->plainTextToken;
-
+                    
                     return $this->success($getUser, AuthConstants::LOGIN, Response::HTTP_OK, true);
                 } else {
                     return $this->error(null, AuthConstants::PERMISSION, Response::HTTP_ACCEPTED, false);
                 }
-            } else {
-                return $this->error(null, AuthConstants::VALIDATION, Response::HTTP_ACCEPTED, false);
-            }
+            // } else {
+            //     return $this->error(null, AuthConstants::VALIDATION, Response::HTTP_ACCEPTED, false);
+            // }
         } catch (\Exception $e) {
             return $this->error(null, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, false);
         }

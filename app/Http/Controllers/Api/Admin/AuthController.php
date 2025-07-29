@@ -23,7 +23,7 @@ class AuthController extends Controller
 
     public function login(User $obj, AuthRequest $request)
     {
-        $request->merge(['user_type' => '1']);
+        // $request->merge(['user_type' => '1']);
         return $this->client->login($obj, $request);
     }
 

@@ -17,6 +17,10 @@ class ServicePricingController extends Controller
     public function __construct(ServicePricingRepositoryInterface $client)
     {
         $this->client = $client;
+        $this->middleware('check.permission:view')->only(['index', 'show', 'all']);
+        $this->middleware('check.permission:add')->only(['store']);
+        $this->middleware('check.permission:edit')->only(['update']);
+        $this->middleware('check.permission:delete')->only(['destroy', 'restore']);
     }
 
     public function index(Request $request): JsonResponse

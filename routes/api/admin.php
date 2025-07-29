@@ -87,15 +87,15 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value]
 
      // Pet Management Routes
         Route::prefix('pets')->group(function () {
-            Route::get('/', [PetController::class, 'index']);
-            Route::post('/', [PetController::class, 'store']);
-            Route::get('/{id}', [PetController::class, 'show']);
-            Route::put('/{id}', [PetController::class, 'update']);
-            Route::delete('/{id}', [PetController::class, 'destroy']);
-            Route::get('/owner/{ownerId}', [PetController::class, 'getByOwner']);
-            Route::get('/categories/list', [PetController::class, 'getPetCategories']);
-            Route::get('/subcategories/list', [PetController::class, 'getPetSubcategories']);
-            Route::get('/breeds/list', [PetController::class, 'getPetBreeds']);
+            Route::get('/', [PetController::class, 'index'])->name('pets.index');
+            Route::post('/', [PetController::class, 'store'])->name('pets.store');
+            Route::get('/{id}', [PetController::class, 'show'])->name('pets.show');
+            Route::put('/{id}', [PetController::class, 'update'])->name('pets.update');
+            Route::delete('/{id}', [PetController::class, 'destroy'])->name('pets.destroy');
+            Route::get('/owner/{ownerId}', [PetController::class, 'getByOwner'])->name('pets.getByOwner');
+            Route::get('/categories/list', [PetController::class, 'getPetCategories'])->name('pets.getPetCategories');
+            Route::get('/subcategories/list', [PetController::class, 'getPetSubcategories'])->name('pets.getPetSubcategories');
+            Route::get('/breeds/list', [PetController::class, 'getPetBreeds'])->name('pets.getPetBreeds');
         });
 
 
@@ -103,34 +103,34 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value]
 
         // Pet Category Management Routes
         Route::prefix('pet-categories')->group(function () {
-            Route::get('/', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'index']);
-            Route::post('/', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'store']);
-            Route::get('/{id}', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'show']);
-            Route::put('/{id}', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'update']);
-            Route::delete('/{id}', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'destroy']);
-            Route::get('/active/list', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'getActive']);
+            Route::get('/', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'index'])->name('pet-category.index');
+            Route::post('/', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'store'])->name('pet-category.store');
+            Route::get('/{id}', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'show'])->name('pet-category.show');
+            Route::put('/{id}', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'update'])->name('pet-category.update');
+            Route::delete('/{id}', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'destroy'])->name('pet-category.destroy');
+            Route::get('/active/list', [App\Http\Controllers\Api\Admin\PetCategoryController::class, 'getActive'])->name('pet-category.getActive');
         });
 
         // Pet Subcategory Management Routes
         Route::prefix('pet-subcategories')->group(function () {
-            Route::get('/', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'index']);
-            Route::post('/', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'store']);
-            Route::get('/{id}', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'show']);
-            Route::put('/{id}', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'update']);
-            Route::delete('/{id}', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'destroy']);
-            Route::get('/category/{categoryId}', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'getByCategory']);
-            Route::get('/active/list', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'getActive']);
+            Route::get('/', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'index'])->name('pet-subcategories.index');
+            Route::post('/', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'store'])->name('pet-subcategories.store');
+            Route::get('/{id}', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'show'])->name('pet-subcategories.show');
+            Route::put('/{id}', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'update'])->name('pet-subcategories.update');
+            Route::delete('/{id}', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'destroy'])->name('pet-subcategories.destroy');
+            Route::get('/category/{categoryId}', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'getByCategory'])->name('pet-subcategories.getByCategory');
+            Route::get('/active/list', [App\Http\Controllers\Api\Admin\PetSubcategoryController::class, 'getActive'])->name('pet-subcategories.getActive');
         });
 
         // Pet Breed Management Routes
         Route::prefix('pet-breeds')->group(function () {
-            Route::get('/', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'index']);
-            Route::post('/', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'store']);
-            Route::get('/{id}', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'show']);
-            Route::put('/{id}', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'update']);
-            Route::delete('/{id}', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'destroy']);
-            Route::get('/subcategory/{subcategoryId}', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'getBySubcategory']);
-            Route::get('/active/list', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'getActive']);
+            Route::get('/', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'index'])->name('pet-subcategories.index');
+            Route::post('/', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'store'])->name('pet-subcategories.store');
+            Route::get('/{id}', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'show'])->name('pet-subcategories.show');
+            Route::put('/{id}', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'update'])->name('pet-subcategories.update');
+            Route::delete('/{id}', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'destroy'])->name('pet-subcategories.destroy');
+            Route::get('/subcategory/{subcategoryId}', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'getBySubcategory'])->name('pet-subcategories.getBySubcategory');
+            Route::get('/active/list', [App\Http\Controllers\Api\Admin\PetBreedController::class, 'getActive'])->name('pet-subcategories.getActive');
         });
 
         // Pet Helper Routes (for dropdowns)

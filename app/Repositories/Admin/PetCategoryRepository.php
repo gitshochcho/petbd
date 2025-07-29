@@ -5,8 +5,9 @@ namespace App\Repositories\Admin;
 use App\Interfaces\Admin\PetCategoryRepositoryInterface;
 use App\Models\PetCategory;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\BaseRepository;
 
-class PetCategoryRepository implements PetCategoryRepositoryInterface
+class PetCategoryRepository extends BaseRepository  implements PetCategoryRepositoryInterface
 {
     public function index($request)
     {
@@ -22,13 +23,16 @@ class PetCategoryRepository implements PetCategoryRepositoryInterface
             return response()->json([
                 'status' => true,
                 'message' => 'Pet categories retrieved successfully',
-                'data' => $categories
+                'data' => $categories,
+                'permissions' => $this->getUserPermissions()
+
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => 'Error retrieving pet categories: ' . $e->getMessage(),
-                'data' => null
+                'data' => null,
+                'permissions' => $this->getUserPermissions()
             ], 500);
         }
     }
@@ -67,17 +71,12 @@ class PetCategoryRepository implements PetCategoryRepositoryInterface
             $category = PetCategory::with(['subcategories.breeds'])
                 ->findOrFail($id);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Pet category retrieved successfully',
-                'data' => $category
-            ]);
+            $responseData =  $category;
+            $responseData['permissions'] = $this->getUserPermissions();
+            return $this->success($responseData, Constants::GETALL, Response::HTTP_OK, true);
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Error retrieving pet category: ' . $e->getMessage(),
-                'data' => null
-            ], 500);
+            $responseData = ['permissions' => $this->getUserPermissions()];
+                return $this->error($responseData, Constants::NODATA, Response::HTTP_NOT_FOUND, false);
         }
     }
 
