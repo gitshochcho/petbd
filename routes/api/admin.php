@@ -135,81 +135,78 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value]
 
         // Pet Helper Routes (for dropdowns)
         Route::prefix('pets')->group(function () {
-            Route::get('/categories', [App\Http\Controllers\Api\Admin\PetController::class, 'getPetCategories']);
-            Route::get('/subcategories', [App\Http\Controllers\Api\Admin\PetController::class, 'getPetSubcategories']);
-            Route::get('/breeds', [App\Http\Controllers\Api\Admin\PetController::class, 'getPetBreeds']);
+            Route::get('/categories', [App\Http\Controllers\Api\Admin\PetController::class, 'getPetCategories'])->name('pets.getPetCategories');
+            Route::get('/subcategories', [App\Http\Controllers\Api\Admin\PetController::class, 'getPetSubcategories'])->name('pets.getPetSubcategories');
+            Route::get('/breeds', [App\Http\Controllers\Api\Admin\PetController::class, 'getPetBreeds'])->name('pets.getPetBreeds');
         });
 
         // Organization Management Routes
         Route::prefix('organizations')->group(function () {
-            Route::get('/', [OrganizationController::class, 'index']);
-            Route::post('/', [OrganizationController::class, 'store']);
-            Route::get('/{id}', [OrganizationController::class, 'show']);
-            Route::put('/{id}', [OrganizationController::class, 'update']);
-            Route::delete('/{id}', [OrganizationController::class, 'destroy']);
-            Route::get('/active/list', [OrganizationController::class, 'getActive']);
+            Route::get('/', [OrganizationController::class, 'index'])->name('organizations.index');
+            Route::post('/', [OrganizationController::class, 'store'])->name('organizations.store');
+            Route::get('/{id}', [OrganizationController::class, 'show'])->name('organizations.show');
+            Route::put('/{id}', [OrganizationController::class, 'update'])->name('organizations.update');
+            Route::delete('/{id}', [OrganizationController::class, 'destroy'])->name('organizations.destroy');
+            Route::get('/active/list', [OrganizationController::class, 'getActive'])->name('organizations.getActive');
         });
 
         // Groomer Profile Management Routes
         Route::prefix('groomer-profiles')->group(function () {
-            Route::get('/', [GroomerProfileController::class, 'index']);
-            Route::post('/', [GroomerProfileController::class, 'store']);
-            Route::get('/{id}', [GroomerProfileController::class, 'show']);
-            Route::put('/{id}', [GroomerProfileController::class, 'update']);
-            Route::delete('/{id}', [GroomerProfileController::class, 'destroy']);
-            Route::get('/organization/{organizationId}', [GroomerProfileController::class, 'getByOrganization']);
-            Route::get('/user/{userId}', [GroomerProfileController::class, 'getByUser']);
+            Route::get('/', [GroomerProfileController::class, 'index'])->name('organizations.index');
+            Route::post('/', [GroomerProfileController::class, 'store'])->name('organizations.store');
+            Route::get('/{id}', [GroomerProfileController::class, 'show'])->name('organizations.show');
+            Route::put('/{id}', [GroomerProfileController::class, 'update'])->name('organizations.update');
+            Route::delete('/{id}', [GroomerProfileController::class, 'destroy'])->name('organizations.destroy');
+            Route::get('/organization/{organizationId}', [GroomerProfileController::class, 'getByOrganization'])->name('organizations.getByOrganization');
+            Route::get('/user/{userId}', [GroomerProfileController::class, 'getByUser'])->name('organizations.getByUser');
         });
 
         // Doctor Profile Management Routes
         Route::prefix('doctor-profiles')->group(function () {
-            Route::get('/', [DoctorProfileController::class, 'index']);
-            Route::post('/', [DoctorProfileController::class, 'store']);
-            Route::get('/{id}', [DoctorProfileController::class, 'show']);
-            Route::put('/{id}', [DoctorProfileController::class, 'update']);
-            Route::delete('/{id}', [DoctorProfileController::class, 'destroy']);
-            Route::get('/organization/{organizationId}', [DoctorProfileController::class, 'getByOrganization']);
-            Route::get('/user/{userId}', [DoctorProfileController::class, 'getByUser']);
+            Route::get('/', [DoctorProfileController::class, 'index'])->name('doctor-profiles.index');
+            Route::post('/', [DoctorProfileController::class, 'store'])->name('doctor-profiles.index');
+            Route::get('/{id}', [DoctorProfileController::class, 'show'])->name('doctor-profiles.index');
+            Route::put('/{id}', [DoctorProfileController::class, 'update'])->name('doctor-profiles.index');
+            Route::delete('/{id}', [DoctorProfileController::class, 'destroy'])->name('doctor-profiles.index');
+            Route::get('/organization/{organizationId}', [DoctorProfileController::class, 'doctor-profiles'])->name('organizations.index');
+            Route::get('/user/{userId}', [DoctorProfileController::class, 'getByUser'])->name('doctor-profiles.index');
         });
 
         // Service Management Routes
         Route::prefix('services')->group(function () {
-            Route::get('/', [ServiceController::class, 'index']);
-            Route::post('/', [ServiceController::class, 'store']);
-            Route::get('/{id}', [ServiceController::class, 'show']);
-            Route::put('/{id}', [ServiceController::class, 'update']);
-            Route::delete('/{id}', [ServiceController::class, 'destroy']);
-            Route::get('/organization/{organizationId}', [ServiceController::class, 'getByOrganization']);
-            Route::get('/{serviceId}/pricing', [ServiceController::class, 'getServicePricing']);
-            Route::put('/{serviceId}/pricing', [ServiceController::class, 'updateServicePricing']);
+            Route::get('/', [ServiceController::class, 'index'])->name('services.index');
+            Route::post('/', [ServiceController::class, 'store'])->name('services.store');
+            Route::get('/{id}', [ServiceController::class, 'show'])->name('services.show');
+            Route::put('/{id}', [ServiceController::class, 'update'])->name('services.update');
+            Route::delete('/{id}', [ServiceController::class, 'destroy'])->name('services.destroy');
+            Route::get('/organization/{organizationId}', [ServiceController::class, 'getByOrganization'])->name('services.getByOrganization');
+            Route::get('/{serviceId}/pricing', [ServiceController::class, 'getServicePricing'])->name('services.getServicePricing');
+            Route::put('/{serviceId}/pricing', [ServiceController::class, 'updateServicePricing'])->name('services.updateServicePricing');
         });
 
         // Service Pricing Management Routes
         Route::prefix('service-pricing')->group(function () {
 
-            Route::get('/', [ServicePricingController::class, 'index']);
-            Route::post('/', [ServicePricingController::class, 'store']);
-            Route::get('/{id}', [ServicePricingController::class, 'show']);
-            Route::put('/{id}', [ServicePricingController::class, 'update']);
-            Route::delete('/{id}', [ServicePricingController::class, 'destroy']);
-            Route::get('/service/{serviceId}', [ServicePricingController::class, 'getByService']);
-            Route::get('/service/{serviceId}/category/{categoryId}', [ServicePricingController::class, 'getByServiceAndCategory']);
-            Route::post('/bulk-update', [ServicePricingController::class, 'bulkUpdate']);
+            Route::get('/', [ServicePricingController::class, 'index'])->name('services.index');
+            Route::post('/', [ServicePricingController::class, 'store'])->name('services.store');
+            Route::get('/{id}', [ServicePricingController::class, 'show'])->name('services.show');
+            Route::put('/{id}', [ServicePricingController::class, 'update'])->name('services.update');
+            Route::delete('/{id}', [ServicePricingController::class, 'destroy'])->name('services.destroy');
+            Route::get('/service/{serviceId}', [ServicePricingController::class, 'getByService'])->name('services.getByService');
+            Route::get('/service/{serviceId}/category/{categoryId}', [ServicePricingController::class, 'getByServiceAndCategory'])->name('services.getByServiceAndCategory');
+            Route::post('/bulk-update', [ServicePricingController::class, 'bulkUpdate'])->name('services.bulkUpdate');
         });
-
-
-
 
         // Appointment Management Routes
         Route::prefix('appointments')->group(function () {
-            Route::get('/', [AppointmentController::class, 'index']);
-            Route::post('/', [AppointmentController::class, 'store']);
-            Route::get('/{id}', [AppointmentController::class, 'show']);
-            Route::put('/{id}', [AppointmentController::class, 'update']);
-            Route::delete('/{id}', [AppointmentController::class, 'destroy']);
-            Route::patch('/{id}/status', [AppointmentController::class, 'updateStatus']);
-            Route::get('/pet/{petId}', [AppointmentController::class, 'getByPet']);
-            Route::get('/professional/{type}/{id}', [AppointmentController::class, 'getByProfessional']);
-            Route::get('/dashboard/stats', [AppointmentController::class, 'getDashboardStats']);
+            Route::get('/', [AppointmentController::class, 'index'])->name('appointments.index');
+            Route::post('/', [AppointmentController::class, 'store'])->name('appointments.store');
+            Route::get('/{id}', [AppointmentController::class, 'show'])->name('appointments.show');
+            Route::put('/{id}', [AppointmentController::class, 'update'])->name('appointments.update');
+            Route::delete('/{id}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+            Route::patch('/{id}/status', [AppointmentController::class, 'updateStatus'])->name('appointments.updateStatus');
+            Route::get('/pet/{petId}', [AppointmentController::class, 'getByPet'])->name('appointments.getByPet');
+            Route::get('/professional/{type}/{id}', [AppointmentController::class, 'getByProfessional'])->name('appointments.getByProfessional');
+            Route::get('/dashboard/stats', [AppointmentController::class, 'getDashboardStats'])->name('appointments.getDashboardStats');
         });
 });

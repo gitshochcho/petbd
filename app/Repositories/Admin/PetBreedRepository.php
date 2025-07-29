@@ -6,7 +6,7 @@ use App\Interfaces\Admin\PetBreedRepositoryInterface;
 use App\Models\PetBreed;
 use Illuminate\Support\Facades\DB;
 
-class PetBreedRepository implements PetBreedRepositoryInterface
+class PetBreedRepository  implements PetBreedRepositoryInterface
 {
     public function index($request)
     {
